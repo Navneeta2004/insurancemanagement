@@ -31,6 +31,7 @@
 		<spring-cloud.version>2025.0.0</spring-cloud.version>
 	</properties>
 	<dependencies>
+	
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
@@ -46,6 +47,11 @@
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+		</dependency>
+		<dependency>
+		    <groupId>jakarta.validation</groupId>
+		    <artifactId>jakarta.validation-api</artifactId>
+		    <version>3.0.2</version>
 		</dependency>
 
 		<dependency>
@@ -73,6 +79,29 @@
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-test</artifactId>
 			<scope>test</scope>
+		</dependency>
+		
+			<!-- JJWT API (main interface) -->
+		<dependency>
+		    <groupId>io.jsonwebtoken</groupId>
+		    <artifactId>jjwt-api</artifactId>
+		    <version>0.11.5</version>
+		</dependency>
+		
+		<!-- JJWT Implementation (runtime implementation of the API) -->
+		<dependency>
+		    <groupId>io.jsonwebtoken</groupId>
+		    <artifactId>jjwt-impl</artifactId>
+		    <version>0.11.5</version>
+		    <scope>runtime</scope>
+		</dependency>
+		
+		<!-- JJWT Jackson JSON Processor (for parsing/generating JSON) -->
+		<dependency>
+		    <groupId>io.jsonwebtoken</groupId>
+		    <artifactId>jjwt-jackson</artifactId>
+		    <version>0.11.5</version>
+		    <scope>runtime</scope>
 		</dependency>
 	</dependencies>
 	<dependencyManagement>

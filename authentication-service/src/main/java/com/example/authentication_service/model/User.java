@@ -1,28 +1,30 @@
 package com.example.authentication_service.model;
 
-import lombok.*;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
+import lombok.Data;
 
 @Entity
-@Table(name = "users")
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, unique = true)
-    private String email;
-
-    @Column(nullable = false)
+    @NotBlank(message = "Username is required")
     private String username;
 
-    @Column(nullable = false)
+    @NotBlank(message = "Email is required")
+    @Email(message = "Invalid email format")
+    private String email;
+
+    @NotBlank(message = "Password is required")
     private String password;
 
-    @Column(nullable = false)
-    private String role; // CUSTOMER, AGENT, ADMIN
+    @NotBlank(message = "Role is required")
+    private String role;
+
+    @NotBlank(message = "Phone number is required")
+    @Pattern(regexp = "^\\+?[0-9]{10,15}$", message = "Invalid phone number format")
+    private String phonenumber; // New field with validation
 }

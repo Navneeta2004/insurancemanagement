@@ -6,6 +6,7 @@ import com.example.authentication_service.model.User;
 import com.example.authentication_service.repository.UserRepository;
 import com.example.authentication_service.service.JwtUtil;
 import com.example.authentication_service.service.MyUserDetailsService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import org.springframework.security.authentication.*;
@@ -24,8 +25,8 @@ public class AuthController {
 
     // Register
     @PostMapping("/register")
-    public ResponseEntity<?> register(@RequestBody User user) {
-        if(userRepository.findByEmail(user.getEmail()).isPresent()) {
+    public ResponseEntity<?> register(@Valid @RequestBody User user) {
+        if (userRepository.findByEmail(user.getEmail()).isPresent()) {
             return ResponseEntity.status(HttpStatus.CONFLICT).body("Email already exists");
         }
         user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
@@ -35,7 +36,7 @@ public class AuthController {
 
     // Login
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody AuthRequest req) {
+    public ResponseEntity<?> login(@Valid @RequestBody AuthRequest req) {
         try {
             authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(req.getEmail(), req.getPassword())
@@ -46,7 +47,7 @@ public class AuthController {
         User user = userRepository.findByEmail(req.getEmail()).orElseThrow();
         String jwt = jwtUtil.generateToken(user);
         return ResponseEntity.ok(
-            new AuthResponse(jwt, user.getId(), user.getUsername(), user.getRole())
+            new AuthResponse(jwt, user.getId(), user.getUsername(), user.getRole(), user.getPhonenumber())
         );
     }
 }
